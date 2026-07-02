@@ -19,6 +19,17 @@ import type { Ref, VNode } from 'vue'
 
 const NAME = 'ElOnlyChild'
 
+/**
+ * @summary ElOnlyChild 唯一子节点 - 渲染插槽中第一个合法子节点并转发 ref 的工具组件
+ *
+ * 🔒 内部组件：主要为 Popper Trigger、TooltipV2 等需要将 ref/attrs 透传给唯一子元素的组件服务
+ *
+ * @usage
+ * <!-- 内部用法：Popper Trigger 用 OnlyChild 包装以确保只有一个子节点并转发 ref -->
+ * <OnlyChild v-bind="$attrs">
+ *   <button>触发器</button>
+ * </OnlyChild>
+ */
 export const OnlyChild = defineComponent({
   name: NAME,
   setup(_, { slots, attrs }) {

@@ -1,3 +1,48 @@
+/**
+ * @summary ElSwitch 开关组件 - 用于在两种互斥状态（开/关）之间切换的开关选择器
+ *
+ * @attr {Boolean|String|Number} modelValue - 绑定值，默认 boolean 类型；可与 active-value / inactive-value 配置返回任意值；默认 false
+ * @attr {Boolean} disabled - 是否禁用开关；默认 false
+ * @attr {Boolean} loading - 是否处于加载中状态（加载时不可切换）；默认 false
+ * @attr {ComponentSize} size - 开关尺寸，可选值 'large' | 'default' | 'small'
+ * @attr {String|Number} width - 开关宽度（像素或字符串），默认 ''
+ * @attr {Boolean} inlinePrompt - 是否将图标/文字显示在圆点内部（仅渲染文字首个字符）；默认 false
+ * @attr {Component} inactiveActionIcon - 关闭状态下圆点内显示的图标组件
+ * @attr {Component} activeActionIcon - 打开状态下圆点内显示的图标组件
+ * @attr {Component} activeIcon - 打开状态显示的图标组件，优先级高于 active-text
+ * @attr {Component} inactiveIcon - 关闭状态显示的图标组件，优先级高于 inactive-text
+ * @attr {String} activeText - 打开状态显示的文字，默认 ''
+ * @attr {String} inactiveText - 关闭状态显示的文字，默认 ''
+ * @attr {Boolean|String|Number} activeValue - 打开状态对应的值；默认 true
+ * @attr {Boolean|String|Number} inactiveValue - 关闭状态对应的值；默认 false
+ * @attr {String} activeColor - 【已废弃】打开状态背景色，请改用 CSS 变量 `--el-switch-on-color`
+ * @attr {String} inactiveColor - 【已废弃】关闭状态背景色，请改用 CSS 变量 `--el-switch-off-color`
+ * @attr {String} borderColor - 【已废弃】边框颜色，请改用 CSS 变量 `--el-switch-border-color`
+ * @attr {String} name - 原生 input 的 name 属性；默认 ''
+ * @attr {Boolean} validateEvent - 值变化时是否触发表单校验；默认 true
+ * @attr {Function} beforeChange - 状态变更前钩子，返回 false 或被 reject 的 Promise 将阻止切换；签名为 `() => Promise<boolean> | boolean`
+ * @attr {String} id - input 元素的 id
+ * @attr {String|Number} tabindex - input 元素的 tabindex
+ * @attr {Boolean|String|Number} value - 【已废弃】绑定值，请使用 model-value / v-model
+ *
+ * @event {Boolean|String|Number} update:modelValue - 值变化时触发，返回当前绑定值（active-value 或 inactive-value）
+ * @event {Boolean|String|Number} change - 值变化时触发，返回当前绑定值
+ * @event {Boolean|String|Number} input - 输入时触发，返回当前绑定值
+ *
+ * @example
+ * ```vue
+ * <el-switch v-model="value" />
+ *
+ * <el-switch
+ *   v-model="value"
+ *   active-text="按月付费"
+ *   inactive-text="按年付费"
+ *   :active-value="1"
+ *   :inactive-value="0"
+ *   :before-change="beforeChange"
+ * />
+ * ```
+ */
 import {
   buildProps,
   definePropType,

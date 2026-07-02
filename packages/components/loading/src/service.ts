@@ -17,6 +17,20 @@ import type { CSSProperties } from 'vue'
 
 let fullscreenInstance: LoadingInstance | undefined = undefined
 
+/**
+ * @summary ElLoadingService 加载服务 - 以编程式 API 创建并管理加载遮罩
+ *
+ * 🔒 内部组件：基于 createLoadingComponent 实现，是 Loading 对外暴露的服务形态（与 v-loading 指令并列）
+ *
+ * @param {LoadingOptions} options - 加载配置
+ * @returns {LoadingInstance} 加载实例，可调用 close() 关闭、setText() 修改文本
+ *
+ * @usage
+ * // 服务式调用
+ * const loading = ElLoadingService({ fullscreen: true, text: '加载中' })
+ * // ...异步操作
+ * loading.close()
+ */
 export const Loading = function (
   options: LoadingOptions = {}
 ): LoadingInstance {

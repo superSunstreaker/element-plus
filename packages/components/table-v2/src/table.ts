@@ -1,3 +1,68 @@
+/**
+ * @summary ElTableV2 虚拟化表格 - 大数据量高性能表格
+ *
+ * 基于虚拟滚动实现的表格组件，当数据量巨大（数千/数万行）时仍能保持流畅渲染与滚动。
+ * 与 ElTable API 差异较大，采用 columns 配置式声明、函数式渲染，支持固定列、行展开、
+ * 排序、自定义单元格/表头渲染。适用于大数据报表、日志查看、监控面板等场景。
+ *
+ * @attr {Array} columns - 列配置数组（必填），每项定义列的 key/width/dataKey/cellRenderer 等
+ * @attr {Array} data - 数据源数组（必填）
+ * @attr {Number} width - 表格宽度（必填，Number）
+ * @attr {Number} height - 表格高度（必填，Number）
+ * @attr {Number} maxHeight - 最大高度
+ * @attr {Number} rowHeight - 行高（默认 50）
+ * @attr {Number} estimatedRowHeight - 预估行高（用于动态高度虚拟列表）
+ * @attr {String|Number} rowKey - 行数据的唯一 key 字段名
+ * @attr {String|Function} rowClass - 行类名或类名生成函数
+ * @attr {Object|Function} rowProps - 行附加属性或生成函数
+ * @attr {Object|Function} cellProps - 单元格附加属性或生成函数
+ * @attr {String|Function} headerClass - 表头类名或生成函数
+ * @attr {Object|Function} headerProps - 表头附加属性或生成函数
+ * @attr {Object|Function} headerCellProps - 表头单元格附加属性或生成函数
+ * @attr {Number} headerHeight - 表头高度
+ * @attr {Number} footerHeight - 表尾高度（默认 0）
+ * @attr {String|Function} class - 自定义类名
+ * @attr {Object} style - 自定义样式
+ * @attr {Boolean} fixed - 是否固定列
+ * @attr {Boolean} useIsScrolling - 是否传递 isScrolling 状态给渲染函数
+ * @attr {Number} indentSize - 展开行缩进（默认 12）
+ * @attr {Number} iconSize - 展开图标尺寸（默认 12）
+ * @attr {Number} hScrollbarSize - 水平滚动条尺寸
+ * @attr {Number} vScrollbarSize - 垂直滚动条尺寸
+ * @attr {Boolean} scrollbarAlwaysOn - 滚动条是否常驻（默认 false）
+ * @attr {Number} cache - 虚拟列表渲染缓存
+ * @attr {Function} dataGetter - 自定义数据获取函数
+ * @attr {Array} fixedData - 固定在顶部的数据（如汇总行）
+ * @attr {String} expandColumnKey - 展开行所在的列 key
+ * @attr {Array} expandedRowKeys - 展开行的 key 数组
+ * @attr {Array} defaultExpandedRowKeys - 默认展开行 key 数组
+ * @attr {Object} sortBy - 排序状态 { key, order }
+ * @attr {Object} sortState - 受控排序状态
+ * @attr {Function} onColumnSort - 列排序回调
+ * @attr {Function} onExpandedRowsChange - 展开行变化回调
+ * @attr {Function} onEndReached - 滚动到底部回调（参数为距离底部的 distance）
+ * @attr {Function} onRowExpand - 行展开回调
+ * @attr {Function} onScroll - 滚动回调
+ * @attr {Function} onRowsRendered - 行渲染回调
+ * @attr {Object} rowEventHandlers - 行事件处理器映射
+ *
+ * @example
+ * <el-table-v2
+ *   :columns="columns"
+ *   :data="data"
+ *   :width="700"
+ *   :height="400"
+ *   :row-height="50"
+ * />
+ *
+ * @example
+ * // 自定义单元格渲染 + 固定列 + 排序
+ * const columns = [
+ *   { key: 'name', dataKey: 'name', title: '姓名', width: 150 },
+ *   { key: 'age', dataKey: 'age', title: '年龄', width: 100, cellRenderer: ({ cellData }) => h('span', cellData) },
+ * ]
+ * <el-table-v2 :columns="columns" :data="data" :width="800" :height="500" fixed />
+ */
 import { buildProps, definePropType } from '@element-plus/utils'
 import {
   virtualizedGridProps,

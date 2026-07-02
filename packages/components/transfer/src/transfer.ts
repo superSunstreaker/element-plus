@@ -1,3 +1,46 @@
+/**
+ * @summary ElTransfer 穿梭框 - 双列表互选数据组件
+ *
+ * 提供左右两个列表，用户可在两侧之间穿梭勾选项，常用于权限分配、字段选择、成员分组。
+ * 支持搜索过滤、自定义渲染、初始勾选、目标列表排序策略、表单校验联动。
+ *
+ * @attr {Array} data - 数据源数组，每项为 { key, label, disabled } 结构（默认 []）
+ * @attr {[String,String]} titles - 自定义左右列表标题（默认 []）
+ * @attr {[String,String]} buttonTexts - 自定义左右穿梭按钮文案（默认 []）
+ * @attr {String} filterPlaceholder - 搜索框占位文本
+ * @attr {Function} filterMethod - 自定义过滤方法，签名 (query, item) => boolean
+ * @attr {Array} leftDefaultChecked - 初始左侧勾选项 key 数组（默认 []）
+ * @attr {Array} rightDefaultChecked - 初始右侧勾选项 key 数组（默认 []）
+ * @attr {Function} renderContent - 自定义数据项渲染函数，签名 (h, option) => VNode
+ * @attr {Array} modelValue - 绑定值（右侧列表 key 数组），v-model 双向绑定（默认 []）
+ * @attr {Object} format - 列表顶部勾选状态文案，{ noChecked, hasChecked }（默认 {}）
+ * @attr {Boolean} filterable - 是否可搜索（默认 false）
+ * @attr {Object} props - 数据源字段别名，{ label, key, disabled }（默认 { label:'label', key:'key', disabled:'disabled' }）
+ * @attr {String} targetOrder - 右侧列表排序策略，可选 'original'/'push'/'unshift'（默认 'original'，保持数据源顺序）
+ * @attr {Boolean} validateEvent - 值变化时是否触发表单校验（默认 true）
+ *
+ * @event {Array,String,Array} change - 值变化时触发，参数为 (新值, 方向 'left'/'right', 移动的 key 数组)
+ * @event {Array} update:modelValue - 绑定值变化时触发
+ * @event {Array,Array|undefined} left-check-change - 左侧勾选项变化时触发
+ * @event {Array,Array|undefined} right-check-change - 右侧勾选项变化时触发
+ *
+ * @example
+ * <el-transfer
+ *   v-model="value"
+ *   :data="data"
+ *   :titles="['可选', '已选']"
+ *   filterable
+ * />
+ *
+ * @example
+ * // 自定义渲染 + 排序策略
+ * <el-transfer
+ *   v-model="value"
+ *   :data="data"
+ *   :render-content="renderFunc"
+ *   target-order="push"
+ * />
+ */
 import { isNil } from 'lodash-unified'
 import {
   buildProps,

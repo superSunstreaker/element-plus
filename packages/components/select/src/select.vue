@@ -269,6 +269,78 @@
 </template>
 
 <script lang="ts">
+/**
+ * @summary ElSelect 选择器 - 下拉选择组件，用于从预设选项中选择一个或多个值，支持搜索、远程加载、创建条目等高级功能
+ *
+ * @attr {string} name - select 原生 input 的 name 属性，用于表单提交时的字段标识
+ * @attr {string} id - 原生 input 元素的 id，用于关联 label 或表单元素
+ * @attr {Array | String | Number | Boolean | Object} modelValue (v-model) - 绑定值（双向绑定），单选时为单个值，多选时为数组
+ * @attr {string} autocomplete - 原生 autocomplete 属性，默认 'off'
+ * @attr {boolean} automaticDropdown - 对于不可搜索的 Select，此属性决定是否在输入框获得焦点时自动弹出选项菜单
+ * @attr {ComponentSize} size - 输入框尺寸，可选值为 large / default / small
+ * @attr {'light' | 'dark' | string} effect - Tooltip 主题效果，内置主题为 light / dark，默认 'light'
+ * @attr {boolean} disabled - 是否禁用选择器，默认 false
+ * @attr {boolean} clearable - 是否可以清空选择，默认 false，为 true 时显示清空按钮
+ * @attr {boolean} filterable - 是否可搜索，默认 false，为 true 时可在输入框中输入关键字过滤选项
+ * @attr {boolean} allowCreate - 是否允许用户创建新条目，需要配合 filterable 使用，默认 false
+ * @attr {boolean} loading - 是否正在从服务器加载数据，默认 false，为 true 时显示加载状态
+ * @attr {string} popperClass - Select 下拉框的自定义类名，可用于自定义下拉框样式
+ * @attr {Object} popperOptions - [popper.js](https://popper.js.org/docs/v2/) 配置参数，用于自定义弹出层的定位和行为
+ * @attr {boolean} remote - 是否从远程服务器获取选项，默认 false，为 true 时需配合 remoteMethod 使用
+ * @attr {string} loadingText - 远程加载时显示的文本，默认 'Loading'
+ * @attr {string} noMatchText - 搜索条件无匹配时显示的文本，也可使用 empty 插槽自定义，默认 'No matching data'
+ * @attr {string} noDataText - 无选项时显示的文本，也可使用 empty 插槽自定义，默认 'No data'
+ * @attr {(query: string) => void} remoteMethod - 自定义远程搜索方法，接收查询字符串作为参数
+ * @attr {(query: string) => boolean} filterMethod - 自定义过滤方法，接收查询字符串返回是否匹配
+ * @attr {boolean} multiple - 是否多选，默认 false
+ * @attr {number} multipleLimit - 多选时用户最多可选择的项目数，0 表示不限制，默认 0
+ * @attr {string} placeholder - 占位提示文字，默认 '请选择'（根据国际化配置）
+ * @attr {boolean} defaultFirstOption - 在输入框按回车时是否选择第一个匹配项，配合 filterable 或 remote 使用
+ * @attr {boolean} reserveKeyword - 多选且可搜索时，选中一个选项后是否保留当前搜索关键字，默认 true
+ * @attr {string} valueKey - 作为 value 唯一标识的键名，当绑定值为对象时必须设置，默认 'value'
+ * @attr {boolean} collapseTags - 多选时是否将选中项折叠为文字显示，默认 false
+ * @attr {boolean} collapseTagsTooltip - 鼠标悬停在折叠标签上时是否显示所有选中项的 Tooltip，需配合 collapse-tags 使用
+ * @attr {number} maxCollapseTags - 折叠模式下最多显示的标签数量，超出部分以 +N 形式展示，默认 1
+ * @attr {boolean} teleported - 是否将下拉框传入 body 节点，默认 true（继承自 tooltip）
+ * @attr {boolean} persistent - 下拉框非激活状态且 persistent 为 false 时销毁下拉框，默认 true
+ * @attr {Component | string} clearIcon - 自定义清除图标组件，默认 CircleClose 图标
+ * @attr {boolean} fitInputWidth - 下拉框宽度是否与输入框保持一致，默认 false
+ * @attr {Component | string} suffixIcon - 自定义尾部图标组件，默认 ArrowDown 下拉箭头图标
+ * @attr {'success' | 'warning' | 'info' | 'danger' | ''} tagType - 多选时标签的类型，默认 'info'
+ * @attr {boolean} validateEvent - 是否触发表单验证，默认 true
+ * @attr {boolean} remoteShowSuffix - 远程搜索方法执行时是否显示后缀图标
+ * @attr {boolean} suffixTransition - ⚠️ 已废弃：将在 2.4.0 版本移除，请使用覆盖样式方案替代
+ * @attr {string} placement - 下拉框出现位置，支持所有 Popper.js placement 值，默认 'bottom-start'
+ * @attr {string} ariaLabel - 原生 input 的 aria-label 属性，用于无障碍访问描述
+ *
+ * @event {Array | string | number | object} update:modelValue (v-model) - 选中值变化时触发，返回更新后的值
+ * @event {Array | string | number | object} change - 选中值改变后触发（与 v-model 类似但语义更明确）
+ * @event {object} remove-tag - 多选模式下移除某个标签时触发，返回被移除的选项对象
+ * @event {} clear - 点击清空按钮时触发
+ * @event {boolean} visible-change - 下拉框出现/隐藏时触发，参数为 true 表示出现，false 表示隐藏
+ * @event {FocusEvent} focus - 输入框获得焦点事件
+ * @event {FocusEvent} blur - 输入框失去焦点事件
+ *
+ * @example
+ * ```vue
+ * <!-- 基础用法 -->
+ * <el-select v-model="value" placeholder="请选择">
+ *   <el-option label="选项一" value="1" />
+ *   <el-option label="选项二" value="2" />
+ * </el-select>
+ *
+ * <!-- 可搜索多选 -->
+ * <el-select v-model="values" multiple filterable placeholder="请输入关键词搜索">
+ *   <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+ * </el-select>
+ *
+ * <!-- 可创建条目 -->
+ * <el-select v-model="value" filterable allow-create default-first-option>
+ *   <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+ * </el-select>
+ * ```
+ */
+
 // @ts-nocheck
 import {
   computed,

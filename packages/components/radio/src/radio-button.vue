@@ -33,6 +33,23 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * @summary ElRadioButton 单选按钮 - 以按钮形态呈现的单选项，需放在 ElRadioGroup 中使用
+ *
+ * ⚠️ 此组件为 ElRadioGroup 的子组件，需配合 ElRadioGroup 使用
+ *
+ * @attr {string|number|boolean} label - 当前选项对应的值，选中时与父组件 modelValue 相等
+ * @attr {boolean} disabled - 是否禁用该单选按钮
+ * @attr {string} name - 原生 name 属性，缺省时继承父组件
+ *
+ * @example
+ * ```vue
+ * <el-radio-group v-model="picked">
+ *   <el-radio-button label="A">选项 A</el-radio-button>
+ *   <el-radio-button label="B">选项 B</el-radio-button>
+ * </el-radio-group>
+ * ```
+ */
 import { computed } from 'vue'
 import { useNamespace } from '@element-plus/hooks'
 import { useRadio } from './use-radio'

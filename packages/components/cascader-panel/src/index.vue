@@ -62,6 +62,30 @@ import type {
 
 import type { ElCascaderPanelContext } from './types'
 
+/**
+ * @summary ElCascaderPanel 级联面板 - 级联选择器的核心面板组件，以多列菜单形式展示层级数据并支持单选/多选、懒加载、checkStrictly 父子不关联、自定义渲染等；可独立使用，也是 el-cascader 的弹出内容
+ *
+ * @attr {number | string | array} modelValue - 选中值，单选为节点值或路径数组（emitPath 决定），多选为数组（v-model）
+ * @attr {CascaderOption[]} options - 可选项数据源，默认 []；字段名可通过 props 自定义
+ * @attr {CascaderProps} props - 配置项，可自定义 value/label/children/leaf/disabled 字段、expandTrigger、multiple、checkStrictly、emitPath、lazy、lazyLoad 等，默认 {}
+ * @attr {boolean} border - 是否显示边框，默认 true
+ * @attr {RenderLabel} renderLabel - 自定义节点 label 的渲染函数，签名 ({ node, data }) => VNode | VNode[]
+ *
+ * @event {(value) => void} update:modelValue - 选中值变化时触发（v-model）
+ * @event {(value) => void} change - 选中值变化时触发
+ * @event {() => void} close - 面板关闭时触发（多选关闭场景）
+ * @event {(pathValues: array) => void} expand-change - 展开节点变化时触发，参数为当前展开路径的各级 value 数组
+ *
+ * @example
+ * ```vue
+ * <el-cascader-panel
+ *   v-model="value"
+ *   :options="options"
+ *   :props="{ expandTrigger: 'hover', multiple: true, checkStrictly: true }"
+ *   @change="onChange"
+ * />
+ * ```
+ */
 export default defineComponent({
   name: 'ElCascaderPanel',
 

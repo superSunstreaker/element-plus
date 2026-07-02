@@ -9,6 +9,22 @@ import type {
   ElCollectionItemInjectionContext,
 } from './tokens'
 
+/**
+ * @summary ElCollection 集合 - 收集并按 DOM 顺序排序子组件的工具组件
+ *
+ * 🔒 内部组件：主要为 RovingFocusGroup、Dropdown、Select 等需要管理一组有序子项的组件提供子项收集能力
+ *
+ * @usage
+ * // 内部用法：通过 createCollectionWithScope 创建带作用域的集合
+ * const {
+ *   ElCollection,           // 集合容器组件
+ *   ElCollectionItem,       // 集合子项组件
+ *   COLLECTION_INJECTION_KEY,
+ *   COLLECTION_ITEM_INJECTION_KEY,
+ * } = createCollectionWithScope('RovingFocusGroup')
+ *
+ * // 子项通过 [data-el-collection-item] 标记，容器按 DOM 顺序读取并排序
+ */
 export const COLLECTION_ITEM_SIGN = `data-el-collection-item`
 
 // Make sure the first letter of name is capitalized

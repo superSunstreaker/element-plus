@@ -1,3 +1,20 @@
+/**
+ * @summary ElStatistic 统计数值 - 展示数值内容并支持格式化
+ *
+ * @attr {String} decimalSeparator - 小数点符号（默认 '.'）
+ * @attr {String} groupSeparator - 千分位分隔符（默认 ','）
+ * @attr {Number} precision - 数值精度，即小数位数（默认 0）
+ * @attr {Function} formatter - 自定义数值展示函数
+ * @attr {Number|Dayjs} value - 数值内容（默认 0）
+ * @attr {String} prefix - 数值前缀
+ * @attr {String} suffix - 数值后缀
+ * @attr {String} title - 数值标题
+ * @attr {String|Object|Array} valueStyle - 数值样式
+ *
+ * @example
+ * <el-statistic title="销售额" :value="100000" :precision="2" prefix="¥" />
+ * <el-statistic title="访问量" :value="8888" group-separator="," suffix="次" />
+ */
 import { buildProps, definePropType } from '@element-plus/utils'
 
 import type { ExtractPropTypes, StyleValue } from 'vue'

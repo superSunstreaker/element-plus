@@ -41,6 +41,26 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * @summary ElCheckboxButton 复选框按钮 - 以按钮形态呈现的复选项，需放在 ElCheckboxGroup 中使用
+ *
+ * ⚠️ 此组件为 ElCheckboxGroup 的子组件，需配合 ElCheckboxGroup 使用
+ *
+ * @attr {string|number|boolean} label - 当前选项对应的值
+ * @attr {boolean} disabled - 是否禁用该复选按钮
+ * @attr {string|number} trueLabel - 选中时代表的值
+ * @attr {string|number} falseLabel - 未选中时代表的值
+ * @attr {string} name - 原生 name 属性
+ * @attr {number} tabindex - 原生 tabindex 属性
+ *
+ * @example
+ * ```vue
+ * <el-checkbox-group v-model="checked">
+ *   <el-checkbox-button label="A">选项 A</el-checkbox-button>
+ *   <el-checkbox-button label="B">选项 B</el-checkbox-button>
+ * </el-checkbox-group>
+ * ```
+ */
 import { computed, inject, useSlots } from 'vue'
 import { useNamespace } from '@element-plus/hooks'
 import { checkboxGroupContextKey } from './constants'

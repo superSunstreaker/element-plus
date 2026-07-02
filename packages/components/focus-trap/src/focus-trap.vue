@@ -2,6 +2,31 @@
   <slot :handle-keydown="onKeydown" />
 </template>
 <script lang="ts">
+/**
+ * @summary ElFocusTrap 焦点陷阱 - 将键盘焦点限制在指定容器内的无障碍工具组件
+ *
+ * 🔒 内部组件：主要为 Dialog、Drawer、MessageBox、Popconfirm 等弹层组件提供焦点管理，确保 Tab 循环不外泄，也可单独使用
+ *
+ * @attr {Boolean} loop - 是否在容器内循环焦点（Tab 到末尾后回到首个可聚焦元素）
+ * @attr {Boolean} trapped - 是否激活焦点陷阱（true 时捕获焦点，false 时释放并还原之前焦点）
+ * @attr {HTMLElement} focusTrapEl - 指定作为陷阱容器的 DOM 元素（不传则使用插槽 ref）
+ * @attr {'container'|'first'|HTMLElement} focusStartEl - 陷阱激活时焦点起始位置
+ *   - 'container': 焦点落在容器本身
+ *   - 'first': 焦点落在首个可聚焦子元素（默认）
+ *   - HTMLElement: 焦点落在指定元素
+ * @emit focus-after-trapped - 焦点被捕获时触发
+ * @emit focus-after-released - 焦点被释放时触发
+ * @emit focusin - 焦点进入容器时触发
+ * @emit focusout - 焦点离开容器时触发
+ * @emit focusout-prevented - 焦点外溢被阻止时触发（可用于自定义循环逻辑）
+ * @emit release-requested - 用户按下 Esc 请求释放焦点时触发
+ *
+ * @usage
+ * <!-- 内部用法：Dialog 将内容包裹在 ElFocusTrap 中确保无障碍 -->
+ * <el-focus-trap :trapped="visible" @release-requested="onClose">
+ *   <div class="dialog-content">...</div>
+ * </el-focus-trap>
+ */
 import {
   defineComponent,
   nextTick,

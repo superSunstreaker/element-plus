@@ -10,6 +10,22 @@ import {
 
 import type { ComponentPublicInstance, ObjectDirective } from 'vue'
 
+/**
+ * @summary v-infinite-scroll 无限滚动指令 - 当滚动容器接近底部时自动触发加载回调
+ *
+ * 🔒 内部组件：以指令形式实现，供需要分页/懒加载的列表场景使用
+ *
+ * @binding {Function} value - 滚动到底部时触发的加载回调（必填）
+ * @attr {Number} infinite-scroll-delay - 节流延迟（ms），默认 200
+ * @attr {Number} infinite-scroll-distance - 触发距离阈值（px），默认 0
+ * @attr {Boolean} infinite-scroll-disabled - 是否禁用，默认 false
+ * @attr {Boolean} infinite-scroll-immediate - 是否立即检查是否需要触发（内容不足一屏时），默认 true
+ *
+ * @usage
+ * <ul v-infinite-scroll="load" :infinite-scroll-distance="10">
+ *   <li v-for="i in list" :key="i">{{ i }}</li>
+ * </ul>
+ */
 export const SCOPE = 'ElInfiniteScroll'
 export const CHECK_INTERVAL = 50
 export const DEFAULT_DELAY = 200

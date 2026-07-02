@@ -10,6 +10,24 @@
 </template>
 
 <script lang="ts">
+/**
+ * @summary ElOptionGroup 选择项分组 - 在 ElSelect 下拉中对多个 ElOption 进行视觉与逻辑分组
+ *
+ * ⚠️ 此组件为 ElSelect 的子组件，需配合 ElOption 使用
+ *
+ * @attr {string} label - 分组标题文本
+ * @attr {boolean} disabled - 是否禁用该分组下的所有选项
+ *
+ * @example
+ * ```vue
+ * <el-select v-model="value">
+ *   <el-option-group label="热门城市">
+ *     <el-option label="北京" value="bj" />
+ *     <el-option label="上海" value="sh" />
+ *   </el-option-group>
+ * </el-select>
+ * ```
+ */
 // @ts-nocheck
 import {
   defineComponent,

@@ -8,6 +8,24 @@ import type { LoadingInstance } from './loading'
 
 const INSTANCE_KEY = Symbol('ElLoading')
 
+/**
+ * @summary v-loading 加载指令 - 以指令形式为元素绑定加载遮罩
+ *
+ * 🔒 内部组件：基于 createLoadingComponent 实现，是 Loading 对外暴露的指令形态（与 ElLoadingService 服务并列）
+ *
+ * @binding {Boolean|LoadingOptions} value - true 显示加载；或传入完整 LoadingOptions 对象
+ * @modifier fullscreen - 全屏遮罩
+ * @modifier body - 将遮罩插入 document.body
+ * @modifier lock - 锁定滚动
+ *
+ * @usage
+ * <!-- 基本用法 -->
+ * <div v-loading="isLoading">内容</div>
+ * <!-- 全屏 -->
+ * <div v-loading.fullscreen="isLoading">内容</div>
+ * <!-- 对象配置 -->
+ * <div v-loading="{ text: '加载中', background: 'rgba(0,0,0,0.7)' }">内容</div>
+ */
 export type LoadingBinding = boolean | UnwrapRef<LoadingOptions>
 export interface ElementLoading extends HTMLElement {
   [INSTANCE_KEY]?: {

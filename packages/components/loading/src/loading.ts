@@ -17,6 +17,21 @@ import { useGlobalComponentSettings } from '@element-plus/components/config-prov
 import type { UseNamespaceReturn } from '@element-plus/hooks'
 import type { LoadingOptionsResolved } from './types'
 
+/**
+ * @summary ElLoading 加载 - 创建并管理加载遮罩实例的工厂函数
+ *
+ * 🔒 内部组件：同时作为 v-loading 指令与 ElLoadingService 服务 的底层实现，提供加载遮罩的创建/关闭/销毁能力
+ *
+ * @param {LoadingOptionsResolved} options - 已解析的加载配置
+ * @returns {LoadingInstance} 加载实例，含 close/setText/handleAfterLeave 等方法
+ *
+ * @usage
+ * // 内部用法：service.ts 的 Loading() 函数调用此工厂创建实例
+ * const instance = createLoadingComponent(resolvedOptions)
+ * instance.visible.value = true
+ * // 关闭
+ * instance.close()
+ */
 export function createLoadingComponent(options: LoadingOptionsResolved) {
   let afterLeaveTimer: number
   // IMPORTANT NOTE: this is only a hacking way to expose the injections on an

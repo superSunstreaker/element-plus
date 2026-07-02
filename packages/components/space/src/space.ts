@@ -1,3 +1,26 @@
+/**
+ * @summary ElSpace 间距 - 统一设置子元素之间的间距，支持水平/垂直排列与自动换行
+ *
+ * @attr {String} direction - 排列方向，可选值 'horizontal' / 'vertical'（默认 'horizontal'）
+ * @attr {String|Object|Array} class - 容器自定义类名（默认 ''）
+ * @attr {String|Array|Object} style - 容器额外样式（默认 ''）
+ * @attr {String} alignment - 子元素对齐方式，同 CSS align-items（默认 'center'）
+ * @attr {String} prefixCls - space-item 类名前缀
+ * @attr {VNodeChild} spacer - 分隔符，可为 VNode / 字符串 / 数字（默认 null）
+ * @attr {Boolean} wrap - 是否自动换行（仅水平方向生效）
+ * @attr {Boolean} fill - 是否填充容器
+ * @attr {Number} fillRatio - 填充比例（默认 100）
+ * @attr {String|[Number,Number]|Number} size - 间距大小，可选 'large' / 'default' / 'small' 或数字或 [水平, 垂直]
+ *
+ * @example
+ * <el-space :size="20">
+ *   <el-button>按钮1</el-button>
+ *   <el-button>按钮2</el-button>
+ * </el-space>
+ * <el-space direction="vertical" wrap>
+ *   <div v-for="i in 10" :key="i">项 {{ i }}</div>
+ * </el-space>
+ */
 import {
   createTextVNode,
   createVNode,

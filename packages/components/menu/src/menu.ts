@@ -1,3 +1,62 @@
+/**
+ * @summary ElMenu 导航菜单 - 为网站提供导航功能的菜单，支持水平/垂直两种模式、折叠展开、路由跳转、子菜单等场景，常用于侧边栏导航或顶部导航栏
+ *
+ * @attr {'horizontal' | 'vertical'} mode - 菜单展示模式，可选值为 horizontal（水平，适合顶部导航） / vertical（垂直，适合侧边栏），默认 'vertical'
+ * @attr {string} defaultActive - 默认激活菜单项的 index，默认 ''，需与子菜单项 el-menu-item 的 index 属性对应
+ * @attr {string[]} defaultOpeneds - 默认展开的 sub-menu 的 index 数组，默认 []，仅在非折叠状态下生效；与 uniqueOpened 配合使用时只会保留数组中第一个匹配项
+ * @attr {boolean} uniqueOpened - 是否只保持一个子菜单的展开状态，默认 false，开启后每次展开新子菜单会自动收起其他已展开的子菜单
+ * @attr {boolean} router - 是否使用 vue-router 模式，默认 false，开启后点击菜单项会调用 router.push 进行路由跳转，跳转目标取 el-menu-item 的 index 或 route 属性
+ * @attr {'hover' | 'click'} menuTrigger - 子菜单展开的触发方式（仅在 horizontal 模式或 collapse 折叠状态下生效），可选值为 hover（悬停） / click（点击），默认 'hover'
+ * @attr {boolean} collapse - 是否水平折叠收起菜单，默认 false，仅在 vertical 模式下生效；折叠后菜单宽度变小并显示为弹出式子菜单
+ * @attr {string} backgroundColor - 菜单的背景色，默认 ''（采用 CSS 默认值 #ffffff），支持十六进制或 CSS 颜色值，会通过 CSS 变量传递给所有子项
+ * @attr {string} textColor - 菜单的文字颜色，默认 ''（采用 CSS 默认值 #303133），支持十六进制或 CSS 颜色值
+ * @attr {string} activeTextColor - 激活菜单项的文字颜色，默认 ''（采用 CSS 默认值 #409eff），支持十六进制或 CSS 颜色值
+ * @attr {boolean} collapseTransition - 是否开启折叠展开动画，默认 true，仅在 vertical 模式下生效
+ * @attr {boolean} ellipsis - 是否自动省略溢出的菜单项（显示为"更多"下拉），默认 true，仅在 horizontal 模式下生效；当窗口过窄时自动将溢出项收纳到"更多"子菜单中
+ * @attr {'dark' | 'light'} popperEffect - 折叠状态下弹出子菜单的 popper 主题，可选值为 dark / light，默认 'dark'
+ *
+ * @event {(index: string, indexPath: string[]) => void} close - 收起某个 sub-menu 时触发，index 为被收起 sub-menu 的 index，indexPath 为从根菜单到该 sub-menu 的完整路径数组
+ * @event {(index: string, indexPath: string[]) => void} open - 展开某个 sub-menu 时触发，index 为被展开 sub-menu 的 index，indexPath 为从根菜单到该 sub-menu 的完整路径数组
+ * @event {(index: string, indexPath: string[], item: MenuItemClicked, routerResult?: Promise<void | NavigationFailure>) => void} select - 菜单项激活时触发；index 为激活项 index，indexPath 为路径数组，item 包含 index/indexPath/route 信息；当 router 模式开启时，routerResult 为 router.push 返回的 Promise
+ *
+ * @example
+ * ```vue
+ * <!-- 示例1: 侧边栏垂直导航，配合 vue-router -->
+ * <el-menu
+ *   :default-active="$route.path"
+ *   router
+ *   background-color="#545c64"
+ *   text-color="#fff"
+ *   active-text-color="#ffd04b"
+ *   @select="handleSelect"
+ * >
+ *   <el-sub-menu index="1">
+ *     <template #title>用户管理</template>
+ *     <el-menu-item index="/users/list">用户列表</el-menu-item>
+ *     <el-menu-item index="/users/role">角色管理</el-menu-item>
+ *   </el-sub-menu>
+ *   <el-menu-item index="/settings">系统设置</el-menu-item>
+ * </el-menu>
+ *
+ * <!-- 示例2: 顶部水平导航 + 折叠侧边栏 -->
+ * <el-menu mode="horizontal" :default-active="activeIndex" :ellipsis="true" @select="onSelect">
+ *   <el-menu-item index="home">首页</el-menu-item>
+ *   <el-sub-menu index="workspace">
+ *     <template #title>工作台</template>
+ *     <el-menu-item index="task">任务</el-menu-item>
+ *     <el-menu-item index="report">报表</el-menu-item>
+ *   </el-sub-menu>
+ * </el-menu>
+ *
+ * <el-menu :collapse="isCollapse" :default-openeds="['1']" unique-opened>
+ *   <el-sub-menu index="1">
+ *     <template #title><el-icon><Menu /></el-icon>折叠菜单</template>
+ *     <el-menu-item index="1-1">子项一</el-menu-item>
+ *   </el-sub-menu>
+ * </el-menu>
+ * ```
+ */
+
 import {
   computed,
   defineComponent,

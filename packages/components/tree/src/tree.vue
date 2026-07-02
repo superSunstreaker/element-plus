@@ -36,6 +36,79 @@
   </div>
 </template>
 <script lang="ts">
+/**
+ * @summary ElTree 树形控件 - 展示层级结构数据的组件
+ *
+ * 用于展示具有层级关系的数据（组织架构、文件目录、分类树），支持复选、单选高亮、
+ * 懒加载、动态加载、搜索过滤、拖拽排序、手风琴模式、自定义节点渲染。
+ * 通过 TreeStore 管理节点状态，支持通过 ref 调用 getCheckedNodes/setCheckedKeys 等方法。
+ *
+ * @attr {Array} data - 树数据源（默认 []）
+ * @attr {String} emptyText - 空数据提示文本
+ * @attr {Boolean} renderAfterExpand - 是否在节点展开后才渲染子节点（默认 true）
+ * @attr {String} nodeKey - 每个节点数据的唯一标识字段名（推荐设置）
+ * @attr {Boolean} checkStrictly - 是否严格的遵循父子不互相关联（默认 false）
+ * @attr {Boolean} defaultExpandAll - 是否默认展开所有节点（默认 false）
+ * @attr {Boolean} expandOnClickNode - 是否点击节点切换展开（默认 true）
+ * @attr {Boolean} checkOnClickNode - 是否点击节点勾选（默认 false）
+ * @attr {Boolean} checkDescendants - 是否在初始化时勾选子节点（懒加载场景，默认 false）
+ * @attr {Boolean} autoExpandParent - 是否自动展开父节点（默认 true）
+ * @attr {Array} defaultCheckedKeys - 默认勾选的节点 key 数组
+ * @attr {Array} defaultExpandedKeys - 默认展开的节点 key 数组
+ * @attr {String|Number} currentNodeKey - 当前高亮节点 key
+ * @attr {Function} renderContent - 树节点内容渲染函数
+ * @attr {Boolean} showCheckbox - 是否显示复选框（默认 false）
+ * @attr {Boolean} draggable - 是否开启拖拽（默认 false）
+ * @attr {Function} allowDrag - 判断节点是否可拖拽
+ * @attr {Function} allowDrop - 判断节点是否可放置，返回 'inner'/'prev'/'next'
+ * @attr {Object} props - 字段映射配置 { children, label, disabled, isLeaf }
+ * @attr {Boolean} lazy - 是否懒加载子节点（默认 false）
+ * @attr {Boolean} highlightCurrent - 是否高亮当前节点（默认 false）
+ * @attr {Function} load - 懒加载回调 (node, resolve) => void
+ * @attr {Function} filterNodeMethod - 节点过滤方法 (value, data, node) => boolean
+ * @attr {Boolean} accordion - 是否手风琴模式（默认 false）
+ * @attr {Number} indent - 子节点缩进（默认 18）
+ * @attr {String|Component} icon - 自定义节点图标
+ *
+ * @event {Object,Boolean} check-change - 节点勾选状态变化时触发，参数 (data, checked, indeterminate)
+ * @event {Object,Object} current-change - 当前节点变化时触发，参数 (data, node)
+ * @event {Object,Object} node-click - 点击节点时触发，参数 (data, node, e)
+ * @event {Object,Object} node-contextmenu - 右键节点时触发
+ * @event {Object,Object} node-collapse - 节点折叠时触发
+ * @event {Object,Object} node-expand - 节点展开时触发
+ * @event {Object,Object} check - 点击复选框时触发，参数 (data, { checkedNodes, checkedKeys, halfChecked... })
+ * @event {Object,Object} node-drag-start - 拖拽开始时触发
+ * @event {Object,Object} node-drag-end - 拖拽结束时触发
+ * @event {Object,Object} node-drop - 拖拽放置时触发
+ * @event {Object,Object} node-drag-leave - 拖拽离开时触发
+ * @event {Object,Object} node-drag-enter - 拖拽进入时触发
+ * @event {Object,Object} node-drag-over - 拖拽经过时触发
+ *
+ * @expose filter(value) - 过滤树节点，需配合 filterNodeMethod
+ * @expose getNode(data) - 根据 data 或 key 获取节点
+ * @expose getNodePath(data) - 获取节点路径
+ * @expose getCheckedNodes(leafOnly?, includeHalfChecked?) - 获取勾选的节点
+ * @expose getCheckedKeys(leafOnly?) - 获取勾选的 key
+ * @expose setCheckedNodes(nodes, leafOnly?) - 设置勾选节点
+ * @expose setCheckedKeys(keys, leafOnly?) - 设置勾选 key
+ * @expose getCurrentNode() - 获取当前节点
+ * @expose getCurrentKey() - 获取当前节点 key
+ * @expose setCurrentNode(node) - 设置当前节点
+ * @expose setCurrentKey(key) - 设置当前节点 key
+ *
+ * @example
+ * <el-tree
+ *   :data="data"
+ *   :props="{ label: 'name', children: 'children' }"
+ *   show-checkbox
+ *   node-key="id"
+ *   @node-click="handleNodeClick"
+ * />
+ *
+ * @example
+ * // 懒加载 + 拖拽
+ * <el-tree :load="loadNode" lazy draggable @node-drop="handleDrop" />
+ */
 // @ts-nocheck
 import {
   computed,

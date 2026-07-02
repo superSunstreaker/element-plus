@@ -1,3 +1,18 @@
+/**
+ * @summary ElResult 结果 - 用于反馈一系列操作任务的处理结果
+ *
+ * @attr {String} title - 标题（默认 ''）
+ * @attr {String} subTitle - 副标题（默认 ''）
+ * @attr {String} icon - 图标类型，可选值 'success' / 'warning' / 'info' / 'error'（默认 'info'）
+ *
+ * @example
+ * <el-result icon="success" title="操作成功" sub-title="请稍候...">
+ *   <template #extra>
+ *     <el-button type="primary">返回</el-button>
+ *   </template>
+ * </el-result>
+ * <el-result icon="error" title="提交失败" sub-title="请检查网络后重试" />
+ */
 import { buildProps } from '@element-plus/utils'
 import {
   CircleCheckFilled,

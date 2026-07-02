@@ -1,3 +1,57 @@
+/**
+ * @summary ElPagination 分页 - 当数据量过多时，使用分页分解数据，常用于列表、表格底部的页码导航
+ *
+ * @attr {number} pageSize - 每页显示的数据条数，支持 v-model:page-size 双向绑定；不设置时由组件内部维护，默认 10
+ * @attr {number} defaultPageSize - 每页条数的默认初始值，不设置等同于 10；用于非受控场景，避免与 pageSize 同时设置
+ * @attr {number} total - 数据总条数，用于计算总页数；与 page-count 二选一设置
+ * @attr {number} pageCount - 总页数，设置后分页器按该值显示页码；与 total 二选一，page-count 优先级更高
+ * @attr {number} pagerCount - 页码按钮的最大数量（含省略号），必须是 5 到 21 之间的奇数，默认 7；总页数超过该值时会折叠显示
+ * @attr {number} currentPage - 当前页码，支持 v-model:current-page 双向绑定；不设置时由组件内部维护，默认 1
+ * @attr {number} defaultCurrentPage - 当前页码的默认初始值，不设置等同于 1；用于非受控场景
+ * @attr {string} layout - 分页组件的布局，子组件名用逗号分隔，可选值：prev / pager / next / jumper / -> / total / sizes / slot，其中 '->' 后的元素右对齐
+ * @attr {number[]} pageSizes - 每页显示个数选择器的选项列表，默认 [10, 20, 30, 40, 50, 100]
+ * @attr {string} popperClass - 每页条数选择器下拉框的自定义类名
+ * @attr {string} prevText - 替代图标显示的上一页按钮文字
+ * @attr {Component | string} prevIcon - 上一页按钮的图标组件，优先级高于 prev-text，默认 ArrowLeft
+ * @attr {string} nextText - 替代图标显示的下一页按钮文字
+ * @attr {Component | string} nextIcon - 下一页按钮的图标组件，优先级高于 next-text，默认 ArrowRight
+ * @attr {boolean} small - 是否使用小型分页样式，默认 false
+ * @attr {boolean} background - 是否为分页按钮添加背景色，默认 false
+ * @attr {boolean} disabled - 是否禁用分页，默认 false
+ * @attr {boolean} hideOnSinglePage - 只有一页时是否隐藏，默认 false
+ *
+ * @event {number} update:current-page - 当前页码变化时触发（v-model:current-page），参数为新页码
+ * @event {number} update:page-size - 每页条数变化时触发（v-model:page-size），参数为新每页条数
+ * @event {number} size-change - 每页条数变化时触发，参数为新的 pageSize
+ * @event {number} current-change - 当前页码变化时触发，参数为新的 currentPage
+ * @event {number} prev-click - 用户点击上一页按钮时触发，参数为当前页码
+ * @event {number} next-click - 用户点击下一页按钮时触发，参数为当前页码
+ *
+ * @example
+ * ```vue
+ * <el-pagination
+ *   v-model:current-page="currentPage"
+ *   v-model:page-size="pageSize"
+ *   :page-sizes="[10, 20, 50, 100]"
+ *   :total="total"
+ *   layout="total, sizes, prev, pager, next, jumper"
+ *   background
+ *   @size-change="handleSizeChange"
+ *   @current-change="handleCurrentChange"
+ * />
+ * ```
+ *
+ * @example
+ * ```vue
+ * <el-pagination :total="100" layout="prev, pager, next" small @current-change="onPageChange" />
+ * ```
+ *
+ * @example
+ * ```vue
+ * <el-pagination :total="50" :hide-on-single-page="true" layout="prev, pager, next" />
+ * ```
+ */
+
 import {
   computed,
   defineComponent,

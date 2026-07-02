@@ -3,6 +3,22 @@ import { buildProps } from '@element-plus/utils'
 import type { ExtractPropTypes } from 'vue'
 import type Popper from './popper.vue'
 
+/**
+ * @summary ElPopper 弹出定位器 - 基于 popper.js 的浮动元素定位基础组件
+ *
+ * 🔒 内部组件：为 Tooltip、Dropdown、Select、Popconfirm、Popover 等所有弹出类组件提供定位能力，也可单独使用
+ *
+ * @attr {String} role - 弹出内容的 ARIA role，影响无障碍语义
+ *   可选值: 'dialog' | 'grid' | 'group' | 'listbox' | 'menu' | 'navigation' | 'tooltip' | 'tree'
+ *   默认: 'tooltip'
+ *
+ * @usage
+ * <!-- 内部用法：Tooltip 内部使用 ElPopper 包裹 trigger 与 content -->
+ * <el-popper role="tooltip">
+ *   <template #trigger><button>触发</button></template>
+ *   <template #default><div>弹出内容</div></template>
+ * </el-popper>
+ */
 const effects = ['light', 'dark'] as const
 const triggers = ['click', 'contextmenu', 'hover', 'focus'] as const
 

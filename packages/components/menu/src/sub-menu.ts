@@ -1,3 +1,33 @@
+/**
+ * @summary ElSubMenu 子菜单 - el-menu 的子组件，表示一个可展开的菜单分组，内嵌 el-menu-item / el-sub-menu，支持水平/垂直模式下的弹出与折叠、悬停延时、自定义展开/收起图标
+ *
+ * @attr {string} index - 唯一标识，必填；用于父级 el-menu 管理展开状态与高亮联动
+ * @attr {number} showTimeout - 水平模式下鼠标移入后展开的延时（毫秒），默认 300
+ * @attr {number} hideTimeout - 水平模式下鼠标移出后收起的延时（毫秒），默认 300
+ * @attr {string} popperClass - 弹出层（popper）自定义 class
+ * @attr {boolean} disabled - 是否禁用，默认 false
+ * @attr {boolean} popperAppendToBody - 是否将弹出层挂载到 body（已废弃，请用 teleported），默认 undefined（按 firstLevel 自动判断）
+ * @attr {boolean} teleported - 弹出层是否 teleport 到 body，默认 undefined（按 firstLevel 自动判断）
+ * @attr {number} popperOffset - 弹出层偏移量，默认 6
+ * @attr {Component | string} expandCloseIcon - 水平一级 / 垂直展开状态下收起时的箭头图标
+ * @attr {Component | string} expandOpenIcon - 水平一级 / 垂直展开状态下展开时的箭头图标
+ * @attr {Component | string} collapseCloseIcon - 折叠菜单收起时的箭头图标
+ * @attr {Component | string} collapseOpenIcon - 折叠菜单展开时的箭头图标
+ *
+ * @example
+ * ```vue
+ * <el-menu mode="horizontal">
+ *   <el-sub-menu index="1">
+ *     <template #title>工作台</template>
+ *     <el-menu-item index="1-1">概览</el-menu-item>
+ *     <el-sub-menu index="1-2">
+ *       <template #title>分析</template>
+ *       <el-menu-item index="1-2-1">实时分析</el-menu-item>
+ *     </el-sub-menu>
+ *   </el-sub-menu>
+ * </el-menu>
+ * ```
+ */
 import {
   Fragment,
   computed,

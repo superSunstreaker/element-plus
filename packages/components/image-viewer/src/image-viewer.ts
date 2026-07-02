@@ -14,6 +14,34 @@ export type ImageViewerAction =
   | 'clockwise'
   | 'anticlockwise'
 
+/**
+ * @summary ElImageViewer 图片预览组件 - 全屏大图预览器，支持图片列表浏览、缩放、旋转、翻转与上一张/下一张切换，常用于点击缩略图后的大图查看；通常由 el-image 的 preview-src-list 自动调用，也可独立使用
+ *
+ * @attr {string[]} urlList - 预览图片地址列表，默认 []；通过左右切换浏览
+ * @attr {number} zIndex - 预览遮罩层的 z-index，默认不设置（由内部管理）
+ * @attr {number} initialIndex - 初始预览图片的索引（基于 0），默认 0；不可超过 urlList 长度
+ * @attr {boolean} infinite - 是否无限循环预览，默认 true
+ * @attr {boolean} hideOnClickModal - 点击遮罩层是否可关闭预览，默认 false
+ * @attr {boolean} teleported - 是否将图片本身 teleport 到 body，默认 false；嵌套父级有 transform 时建议设为 true
+ * @attr {boolean} closeOnPressEscape - 是否支持按 ESC 关闭预览，默认 true
+ * @attr {number} zoomRate - 缩放事件的缩放比率，默认 1.2；值越大每次缩放幅度越大
+ *
+ * @event {() => void} close - 预览关闭时触发
+ * @event {(index: number) => void} switch - 切换图片时触发，参数为新的图片索引
+ *
+ * @example
+ * ```vue
+ * <!-- 独立使用 -->
+ * <el-button @click="visible = true">预览</el-button>
+ * <el-image-viewer
+ *   v-if="visible"
+ *   :url-list="urls"
+ *   :initial-index="0"
+ *   teleported
+ *   @close="visible = false"
+ * />
+ * ```
+ */
 export const imageViewerProps = buildProps({
   /**
    * @description preview link list.

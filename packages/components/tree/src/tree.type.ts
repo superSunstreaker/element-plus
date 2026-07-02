@@ -1,3 +1,28 @@
+/**
+ * @summary ElTree 树形控件 - 类型定义文件
+ *
+ * 定义 Tree 组件相关的类型与接口。ElTree 用于展示具有层级结构的数据（如组织架构、
+ * 文件目录、分类树），支持多选、懒加载、搜索过滤、拖拽排序、自定义渲染等。
+ *
+ * @example
+ * <el-tree
+ *   :data="data"
+ *   :props="{ label: 'name', children: 'children' }"
+ *   show-checkbox
+ *   node-key="id"
+ *   @node-click="handleNodeClick"
+ * />
+ *
+ * @example
+ * // 懒加载 + 拖拽
+ * <el-tree
+ *   :load="loadNode"
+ *   lazy
+ *   draggable
+ *   allow-drag="allowDrag"
+ *   allow-drop="allowDrop"
+ * />
+ */
 import type {
   Component,
   ComponentInternalInstance,

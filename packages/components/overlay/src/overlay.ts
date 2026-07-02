@@ -5,6 +5,23 @@ import { useNamespace, useSameTarget } from '@element-plus/hooks'
 import type { CSSProperties, ExtractPropTypes } from 'vue'
 import type { ZIndexProperty } from 'csstype'
 
+/**
+ * @summary ElOverlay 遮罩层 - 覆盖在页面内容之上的全屏/局部遮罩层
+ *
+ * 🔒 内部组件：主要为 Dialog、Drawer、MessageBox、Loading 等弹层类组件提供底层遮罩能力，也可单独使用
+ *
+ * @attr {Boolean} mask - 是否显示遮罩背景，默认 true
+ * @attr {Boolean} customMaskEvent - 是否自定义遮罩点击事件（关闭默认点击行为），默认 false
+ * @attr {String|String[]|Object} overlayClass - 遮罩层自定义类名
+ * @attr {String|Number} zIndex - 遮罩层 z-index
+ * @emit click - 遮罩被点击时触发（仅当 customMaskEvent 为 false 时由默认行为派发）
+ *
+ * @usage
+ * <!-- 内部用法：Dialog/Drawer 将其作为遮罩层包装默认插槽 -->
+ * <el-overlay :mask="true" :z-index="2000" @click="onClose">
+ *   <div>弹层内容</div>
+ * </el-overlay>
+ */
 export const overlayProps = buildProps({
   mask: {
     type: Boolean,

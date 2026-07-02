@@ -1,3 +1,13 @@
+<!--
+ * @summary ElCollapseTransition 折叠过渡 - 为折叠/展开内容提供高度过渡动画的过渡组件
+ *
+ * 🔒 内部组件：主要为 Collapse、Tree 等需要折叠动画的组件服务，也可单独使用
+ *
+ * @usage
+ * <el-collapse-transition>
+ *   <div v-show="expanded">折叠内容</div>
+ * </el-collapse-transition>
+-->
 <template>
   <transition :name="ns.b()" v-on="on">
     <slot />

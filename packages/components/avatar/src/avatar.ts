@@ -1,3 +1,21 @@
+/**
+ * @summary ElAvatar 头像 - 用于展示用户头像或图标
+ *
+ * @attr {Number|String} size - 头像尺寸，可选 'large' / 'default' / 'small' 或数字（默认 ''）
+ * @attr {String} shape - 头像形状，可选值 'circle' / 'square'（默认 'circle'）
+ * @attr {String|Component} icon - 图标组件，用于图标类型头像
+ * @attr {String} src - 图片头像的源地址（默认 ''）
+ * @attr {String} alt - 图片原生 alt 属性
+ * @attr {String} srcSet - 图片原生 srcset 属性
+ * @attr {String} fit - 图片填充方式，同 CSS object-fit（默认 'cover'）
+ *
+ * @event {Event} error - 图片加载失败时触发
+ *
+ * @example
+ * <el-avatar :size="50" src="https://example.com/avatar.png" />
+ * <el-avatar shape="square" :icon="UserFilled" />
+ * <el-avatar size="large">用户</el-avatar>
+ */
 import {
   buildProps,
   definePropType,

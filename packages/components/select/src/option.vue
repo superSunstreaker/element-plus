@@ -12,6 +12,24 @@
 </template>
 
 <script lang="ts">
+/**
+ * @summary ElOption 选择项 - ElSelect 下拉列表中的单个选项
+ *
+ * ⚠️ 此组件为 ElSelect 的子组件，需配合 ElSelect 使用
+ *
+ * @attr {string|number|boolean|object} value - 选项的值，必填
+ * @attr {string|number} label - 选项展示文本，省略时同 value
+ * @attr {boolean} created - 是否为用户创建的新选项（用于可创建模式）
+ * @attr {boolean} disabled - 是否禁用该选项
+ *
+ * @example
+ * ```vue
+ * <el-select v-model="value">
+ *   <el-option label="选项一" value="1" />
+ *   <el-option label="选项二" value="2" />
+ * </el-select>
+ * ```
+ */
 // @ts-nocheck
 import {
   computed,
